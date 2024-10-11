@@ -1,5 +1,6 @@
 package com.wokieDev.egidiusII.model;
 
+import com.wokieDev.egidiusII.model.dto.DadosCadastroLocalEncontrado;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,11 @@ public class LocalEncontrado {
 
     @OneToMany(mappedBy = "localAtendimento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Atendimento> atendimentos = new ArrayList<>();
+
+    /*Construtores*/
+    public LocalEncontrado(DadosCadastroLocalEncontrado dados) {
+        this.nome = dados.nome();
+        this.usuarios = dados.usuarios();
+        this.atendimentos = dados.atendimentos();
+    }
 }
