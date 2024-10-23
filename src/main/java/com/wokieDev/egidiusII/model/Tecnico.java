@@ -27,6 +27,7 @@ public class Tecnico {
     private String cpf;
     private LocalDate dataNascimento;
     private String email;
+    private String telefone;
     private String matricula;
 
     @Enumerated(EnumType.STRING)
@@ -41,6 +42,7 @@ public class Tecnico {
         this.cpf = dados.cpf();
         this.dataNascimento = dados.dataNascimento();
         this.email = dados.email();
+        this.telefone = dados.telefone();
         this.matricula = dados.matricula();
         this.funcao = dados.funcao();
         this.atendimentos = dados.atendimentos();

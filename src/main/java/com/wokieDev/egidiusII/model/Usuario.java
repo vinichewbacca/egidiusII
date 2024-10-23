@@ -1,5 +1,6 @@
 package com.wokieDev.egidiusII.model;
 
+import com.wokieDev.egidiusII.model.dto.DadosCadastroUsuario;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,4 +33,15 @@ public class Usuario {
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Atendimento> atendimentos = new ArrayList<>();
+
+    public Usuario(DadosCadastroUsuario dados) {
+        this.nome = dados.nome();
+        this.mae = dados.mae();
+        this.pai = dados.pai();
+        this.dataNascimento = dados.dataNascimento();
+        this.cpf = dados.cpf();
+        this.sexo = dados.sexo();
+        this.dataAbordagem = dados.dataAbordagem();
+        this.atendimentos = dados.atendimentos();
+    }
 }

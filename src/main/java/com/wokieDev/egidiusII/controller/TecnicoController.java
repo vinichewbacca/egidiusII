@@ -2,7 +2,9 @@ package com.wokieDev.egidiusII.controller;
 
 import com.wokieDev.egidiusII.model.dto.DadosCadastroTecnico;
 import com.wokieDev.egidiusII.service.TecnicoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,8 @@ public class TecnicoController {
     private TecnicoService service;
 
     @PostMapping("/cadastrar")
-    public void cadastrarTecnico (@RequestBody DadosCadastroTecnico dados){
+    @Transactional
+    public void cadastrarTecnico (@RequestBody @Valid DadosCadastroTecnico dados){
 
         service.cadastrar(dados);
     }

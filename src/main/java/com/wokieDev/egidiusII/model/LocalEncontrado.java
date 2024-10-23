@@ -29,7 +29,7 @@ public class LocalEncontrado {
 
     /*Construtores*/
     public LocalEncontrado(DadosCadastroLocalEncontrado dados) {
-        this.nome = dados.nome();
+        this.nome = dados.nome().toUpperCase();
         this.usuarios = dados.usuarios();
         this.atendimentos = dados.atendimentos();
     }
