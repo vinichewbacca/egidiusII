@@ -1,11 +1,9 @@
 package com.wokieDev.egidiusII.model.dto;
 
-import com.wokieDev.egidiusII.model.Atendimento;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public record DadosCadastroUsuario(
 
@@ -19,11 +17,10 @@ public record DadosCadastroUsuario(
          String cpf,
          String sexo,
 
-         @NotBlank
-         String localEncontrado,
+         @NotNull
+         Long localEncontrado,
 
          @NotNull
-         LocalDate dataAbordagem,
-         List<Atendimento> atendimentos
+         LocalDate dataAbordagem
 ) {
 }

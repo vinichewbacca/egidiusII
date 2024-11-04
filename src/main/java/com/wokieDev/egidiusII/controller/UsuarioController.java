@@ -1,6 +1,7 @@
 package com.wokieDev.egidiusII.controller;
 
 import com.wokieDev.egidiusII.model.dto.DadosCadastroUsuario;
+import com.wokieDev.egidiusII.model.dto.DadosExibirUsuario;
 import com.wokieDev.egidiusII.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,23 @@ public class UsuarioController {
     }
 
     @GetMapping("/lista")
-    public List<DadosCadastroUsuario> listarTodos(){
+    public List<DadosExibirUsuario> listarTodos(){
         return service.buscarTodos();
+    }
+
+    @GetMapping("/buscaCpf/{cpf}")
+    public DadosExibirUsuario buscaCpf (@PathVariable String cpf){
+        return service.buscarCpf(cpf);
+    }
+
+    @GetMapping("/buscaNome/{nome}")
+    public List<DadosExibirUsuario> buscaNome (@PathVariable String nome){
+        return service.buscarNome(nome);
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizar (@RequestBody DadosExibirUsuario dados) {
+        service.atualizar(dados);
     }
 }

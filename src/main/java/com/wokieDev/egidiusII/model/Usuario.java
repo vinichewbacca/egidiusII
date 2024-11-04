@@ -1,6 +1,7 @@
 package com.wokieDev.egidiusII.model;
 
 import com.wokieDev.egidiusII.model.dto.DadosCadastroUsuario;
+import com.wokieDev.egidiusII.model.dto.DadosExibirUsuario;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,6 +43,25 @@ public class Usuario {
         this.cpf = dados.cpf();
         this.sexo = dados.sexo();
         this.dataAbordagem = dados.dataAbordagem();
-        this.atendimentos = dados.atendimentos();
+    }
+
+    public void atualizarDados(DadosExibirUsuario dados) { //o local encontrado e a data da primeira abordagem
+        if (dados.nome() != null)                          //não podem ser alterados
+            this.nome = dados.nome();
+
+        if (dados.mae() != null)
+            this.mae = dados.mae();
+
+        if (dados.pai() != null)
+            this.pai = dados.pai();
+
+        if (dados.dataNascimento() != null)
+            this.dataNascimento = dados.dataNascimento();
+
+        if (dados.cpf() != null)
+            this.cpf = dados.cpf();
+
+        if (dados.sexo() != null)
+            this.sexo = dados.sexo();
     }
 }
