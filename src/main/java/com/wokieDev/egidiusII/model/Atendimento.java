@@ -1,6 +1,7 @@
 package com.wokieDev.egidiusII.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,4 +29,9 @@ public class Atendimento {
 
     @ManyToOne
     private Tecnico tecnico;
+
+    public Atendimento( DadosCadastroAtendimento dados) {
+        this.dataAtendimento = dados.dataAtendimento();
+        this.descricaoAtendimento = dados.descricaoAtendimento().toUpperCase();
+    }
 }

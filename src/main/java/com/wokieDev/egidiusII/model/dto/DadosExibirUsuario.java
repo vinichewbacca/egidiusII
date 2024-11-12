@@ -1,7 +1,5 @@
 package com.wokieDev.egidiusII.model.dto;
 
-import com.wokieDev.egidiusII.model.Atendimento;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,6 +13,6 @@ public record DadosExibirUsuario(
          String sexo,
          String localEncontrado,
          LocalDate dataAbordagem,
-         List<Atendimento> atendimentos
+         List<DadosExibirAtendimento> atendimentos
 ) {
 }

@@ -1,7 +1,9 @@
 package com.wokieDev.egidiusII.service;
 
+import com.wokieDev.egidiusII.model.Atendimento;
 import com.wokieDev.egidiusII.model.Usuario;
 import com.wokieDev.egidiusII.model.dto.DadosCadastroUsuario;
+import com.wokieDev.egidiusII.model.dto.DadosExibirAtendimento;
 import com.wokieDev.egidiusII.model.dto.DadosExibirUsuario;
 import com.wokieDev.egidiusII.repository.LocalEncontradoRepository;
 import com.wokieDev.egidiusII.repository.UsuarioRepository;
@@ -62,13 +64,20 @@ public class UsuarioService {
                 .sorted(Comparator.comparing(Usuario::getNome))
                 .map(usuario -> new DadosExibirUsuario(usuario.getId(), usuario.getNome(), usuario.getMae(), usuario.getPai()
                                                         , usuario.getDataNascimento(), usuario.getCpf(), usuario.getSexo()
-                                                        , usuario.getLocalEncontrado().getNome(),usuario.getDataAbordagem(),usuario.getAtendimentos()))
+                                                        , usuario.getLocalEncontrado().getNome(),usuario.getDataAbordagem(),
+                        usuario.getAtendimentos()
+                                .stream().sorted(Comparator.comparing(Atendimento::getDataAtendimento)).map(atendimento -> new DadosExibirAtendimento(atendimento.getDataAtendimento(),atendimento.getDescricaoAtendimento(),atendimento.getLocalAtendimento().getNome()
+                                ,atendimento.getTecnico().getNome(), atendimento.getUsuario().getNome()))
+                                .collect(Collectors.toList())))
                 .collect(Collectors.toList());
     }
     private DadosExibirUsuario conversorDados(Usuario usuario){
         return new DadosExibirUsuario(usuario.getId(),usuario.getNome(), usuario.getMae(), usuario.getPai()
                 , usuario.getDataNascimento(), usuario.getCpf(), usuario.getSexo()
-                , usuario.getLocalEncontrado().getNome(),usuario.getDataAbordagem(),usuario.getAtendimentos());
+                , usuario.getLocalEncontrado().getNome(),usuario.getDataAbordagem(),usuario.getAtendimentos()
+                .stream().map(atendimento -> new DadosExibirAtendimento(atendimento.getDataAtendimento(),atendimento.getDescricaoAtendimento(),atendimento.getLocalAtendimento().getNome()
+                        ,atendimento.getTecnico().getNome(), atendimento.getUsuario().getNome()))
+                .collect(Collectors.toList()));
     }
 
 }

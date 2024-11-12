@@ -45,6 +45,5 @@ public class Tecnico {
         this.telefone = dados.telefone();
         this.matricula = dados.matricula();
         this.funcao = dados.funcao();
-        this.atendimentos = dados.atendimentos();
     }
 }

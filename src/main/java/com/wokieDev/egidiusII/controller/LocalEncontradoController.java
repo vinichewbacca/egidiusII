@@ -1,13 +1,13 @@
 package com.wokieDev.egidiusII.controller;
 
 import com.wokieDev.egidiusII.model.dto.DadosCadastroLocalEncontrado;
+import com.wokieDev.egidiusII.model.dto.DadosExibirLocalEncontrado;
 import com.wokieDev.egidiusII.service.LocalEncontradoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("local")
@@ -20,5 +20,10 @@ public class LocalEncontradoController {
     @Transactional
     public void cadastrarLocal (@RequestBody DadosCadastroLocalEncontrado dados){
         service.cadastrar(dados);
+    }
+
+    @GetMapping
+    public List<DadosExibirLocalEncontrado> listarTudo (){
+        return service.listarTudo();
     }
 }

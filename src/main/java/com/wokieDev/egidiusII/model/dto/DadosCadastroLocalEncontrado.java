@@ -6,8 +6,6 @@ import com.wokieDev.egidiusII.model.Usuario;
 import java.util.List;
 
 public record DadosCadastroLocalEncontrado(
-        String nome,
-        List<Usuario> usuarios,
-        List<Atendimento> atendimentos
+        String nome
 ) {
 }
