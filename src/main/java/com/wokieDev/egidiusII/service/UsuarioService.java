@@ -22,7 +22,7 @@ public class UsuarioService {
     @Autowired
     private LocalEncontradoRepository localEncontradoRepository;
 
-    public void cadastrar(DadosCadastroUsuario dados) {
+    public DadosExibirUsuario cadastrar(DadosCadastroUsuario dados) {
         Usuario usuario = new Usuario(dados);
         var local = localEncontradoRepository.findById(dados.localEncontrado());
 
@@ -32,11 +32,13 @@ public class UsuarioService {
         }
 
         usuarioRepository.save(usuario);
+        return conversorDados(usuario);
     }
 
-    public void atualizar(DadosExibirUsuario dados) {
+    public DadosExibirUsuario atualizar(DadosExibirUsuario dados) {
         var usuario = usuarioRepository.getReferenceById(dados.id());
         usuario.atualizarDados(dados);
+        return conversorDados(usuario);
     }
 
     public List<DadosExibirUsuario> buscarTodos(){
@@ -57,6 +59,10 @@ public class UsuarioService {
         return  conversorDadosList(usuarioRepository.findByNomeContainingIgnoreCase(nome));
     }
 
+    public DadosExibirUsuario buscarId(Long id) {
+        return conversorDados(usuarioRepository.getReferenceById(id));
+    }
+
     /*---Métodos Privados de uso apenas da Classe---*/
     private List<DadosExibirUsuario> conversorDadosList(List<Usuario> usuarioList){
         return usuarioList
@@ -66,7 +72,8 @@ public class UsuarioService {
                                                         , usuario.getDataNascimento(), usuario.getCpf(), usuario.getSexo()
                                                         , usuario.getLocalEncontrado().getNome(),usuario.getDataAbordagem(),
                         usuario.getAtendimentos()
-                                .stream().sorted(Comparator.comparing(Atendimento::getDataAtendimento)).map(atendimento -> new DadosExibirAtendimento(atendimento.getDataAtendimento(),atendimento.getDescricaoAtendimento(),atendimento.getLocalAtendimento().getNome()
+                                .stream().sorted(Comparator.comparing(Atendimento::getDataAtendimento))
+                                .map(atendimento -> new DadosExibirAtendimento(atendimento.getId(), atendimento.getDataAtendimento(),atendimento.getDescricaoAtendimento(),atendimento.getLocalAtendimento().getNome()
                                 ,atendimento.getTecnico().getNome(), atendimento.getUsuario().getNome()))
                                 .collect(Collectors.toList())))
                 .collect(Collectors.toList());
@@ -75,7 +82,7 @@ public class UsuarioService {
         return new DadosExibirUsuario(usuario.getId(),usuario.getNome(), usuario.getMae(), usuario.getPai()
                 , usuario.getDataNascimento(), usuario.getCpf(), usuario.getSexo()
                 , usuario.getLocalEncontrado().getNome(),usuario.getDataAbordagem(),usuario.getAtendimentos()
-                .stream().map(atendimento -> new DadosExibirAtendimento(atendimento.getDataAtendimento(),atendimento.getDescricaoAtendimento(),atendimento.getLocalAtendimento().getNome()
+                .stream().map(atendimento -> new DadosExibirAtendimento(atendimento.getId(),atendimento.getDataAtendimento(),atendimento.getDescricaoAtendimento(),atendimento.getLocalAtendimento().getNome()
                         ,atendimento.getTecnico().getNome(), atendimento.getUsuario().getNome()))
                 .collect(Collectors.toList()));
     }

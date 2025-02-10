@@ -19,6 +19,7 @@ public class LocalEncontradoController {
     @PostMapping("/cadastrar")
     @Transactional
     public void cadastrarLocal (@RequestBody DadosCadastroLocalEncontrado dados){
+
         service.cadastrar(dados);
     }
 

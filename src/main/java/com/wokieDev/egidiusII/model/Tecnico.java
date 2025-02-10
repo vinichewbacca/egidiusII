@@ -1,6 +1,7 @@
 package com.wokieDev.egidiusII.model;
 
 import com.wokieDev.egidiusII.model.dto.DadosCadastroTecnico;
+import com.wokieDev.egidiusII.model.dto.DadosExibirTecnico;
 import com.wokieDev.egidiusII.model.enumerate.Funcao;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -29,6 +30,8 @@ public class Tecnico {
     private String email;
     private String telefone;
     private String matricula;
+    private String login;
+    private String senha;
 
     @Enumerated(EnumType.STRING)
     private Funcao funcao;
@@ -45,5 +48,32 @@ public class Tecnico {
         this.telefone = dados.telefone();
         this.matricula = dados.matricula();
         this.funcao = dados.funcao();
+        this.login = dados.email();
+    }
+
+    /*Métodos*/
+    public void atualizar (DadosExibirTecnico dados){
+        if (dados.nome() != null)
+            this.nome = dados.nome();
+
+        if (dados.cpf() != null)
+            this.cpf = dados.cpf();
+
+        if (dados.dataNascimento() != null)
+            this.dataNascimento = dados.dataNascimento();
+
+        if(dados.email() != null){
+            this.email = dados.email();
+            this.login = dados.email();
+        }
+
+        if (dados.telefone() != null)
+            this.telefone = dados.telefone();
+
+        if (dados.matricula() != null)
+            this.matricula = dados.matricula();
+
+        if (dados.funcao() != null)
+            this.funcao = dados.funcao();
     }
 }

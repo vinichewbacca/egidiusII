@@ -28,7 +28,7 @@ public class AtendimentoService {
     @Autowired
     private LocalEncontradoRepository localEncontradoRepository;
 
-    public void cadastrar(DadosCadastroAtendimento dados) {
+    public DadosExibirAtendimento cadastrar(DadosCadastroAtendimento dados) {
         var usuario = usuarioRepository.getReferenceById(dados.usuario());
         var tecnico = tecnicoRepository.getReferenceById(dados.tecnico());
         var localAtendimento = localEncontradoRepository.getReferenceById(dados.localAtendimento());
@@ -44,6 +44,7 @@ public class AtendimentoService {
         usuario.setAtendimentos(atendimentoList);
         tecnico.setAtendimentos(atendimentoList);
         atendimentoRepository.save(atendimento);
+        return convertDados(atendimento);
     }
 
     public List<DadosExibirAtendimento> buscarTodos() {
@@ -62,10 +63,19 @@ public class AtendimentoService {
         return convertList(atendimentoRepository.findAllByTecnicoId(idTecnico));
     }
 
+    public DadosExibirAtendimento bucaPorId(Long id){
+        return convertDados(atendimentoRepository.getReferenceById(id));
+    }
+
     /*--Métodos Privados--*/
     private List<DadosExibirAtendimento> convertList(List<Atendimento> atendimentoList){
         return atendimentoList.stream().sorted(Comparator.comparing(Atendimento::getDataAtendimento).reversed())
-                .map(a -> new DadosExibirAtendimento(a.getDataAtendimento(), a.getDescricaoAtendimento(),a.getLocalAtendimento().getNome()
+                .map(a -> new DadosExibirAtendimento(a.getId(),a.getDataAtendimento(), a.getDescricaoAtendimento(),a.getLocalAtendimento().getNome()
                 ,a.getTecnico().getNome(), a.getUsuario().getNome())).collect(Collectors.toList());
+    }
+
+    private DadosExibirAtendimento convertDados(Atendimento atendimento){
+        return new DadosExibirAtendimento(atendimento.getId(), atendimento.getDataAtendimento(), atendimento.getDescricaoAtendimento(), atendimento.getLocalAtendimento().getNome(),
+                atendimento.getTecnico().getNome(), atendimento.getUsuario().getNome());
     }
 }

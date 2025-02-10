@@ -17,11 +17,20 @@ public class TecnicoService {
     @Autowired
     private TecnicoRepository repository;
 
-    public void cadastrar(DadosCadastroTecnico dados) {
-        repository.save(new Tecnico(dados));
+    public DadosExibirTecnico cadastrar(DadosCadastroTecnico dados) {
+        Tecnico t = new Tecnico(dados);
+        repository.save(t);
+        return converterDados(t);
+    }
+
+    public DadosExibirTecnico atualizar(DadosExibirTecnico dados){
+        var tecnico = repository.getReferenceById(dados.id());
+        tecnico.atualizar(dados);
+        return converterDados(tecnico);
     }
 
     public List<DadosExibirTecnico> listarTodos(){
+
         return convertList(repository.findAll());
     }
 
@@ -29,6 +38,9 @@ public class TecnicoService {
         return convertList(repository.findByNomeContainingIgnoreCase(nome));
     }
 
+    public DadosExibirTecnico buscarId(Long id) {
+        return converterDados(repository.getReferenceById(id));
+    }
 
     /*--Métodos Privados--*/
     private List<DadosExibirTecnico> convertList(List<Tecnico> tecnicoList){
@@ -37,4 +49,11 @@ public class TecnicoService {
                         t.getDataNascimento(), t.getEmail(), t.getTelefone(), t.getMatricula(), t.getFuncao()))
                 .collect(Collectors.toList());
     }
+
+    private DadosExibirTecnico converterDados(Tecnico t){
+        return new DadosExibirTecnico(t.getId(), t.getNome(), t.getCpf(),
+                t.getDataNascimento(), t.getEmail(), t.getTelefone(), t.getMatricula(), t.getFuncao());
+    }
+
+
 }
