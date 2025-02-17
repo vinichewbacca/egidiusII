@@ -1,4 +1,4 @@
-package com.wokieDev.egidiusII.infra;
+package com.wokieDev.egidiusII.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;

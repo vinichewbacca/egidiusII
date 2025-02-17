@@ -29,6 +29,10 @@ public record DadosCadastroTecnico(
         @NotBlank
         @Pattern(regexp = "\\d{6}")
         String matricula,
+
+        @NotBlank
+        @Pattern(regexp = "\\d{6}")
+        String senha,
         Funcao funcao
 ) {
 }
